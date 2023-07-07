@@ -11,14 +11,15 @@ app.set('view engine', 'ejs');
 const port = process.env.PORT || 3000;
 const date = require(__dirname + '/date.js');
 
+const dbProtocol = process.env.DB_PROTOCOL || "mongodb";
 const dbUsername = process.env.MONGO_DB_USERNAME || "root";
 const dbPassword = process.env.MONGO_DB_PASSWORD || "root";
-const dbIp = process.env.MONGO_DB_IP || "127.0.0.1";
+const dbAddress = process.env.MONGO_DB_ADDRESS || "127.0.0.1";
 
 main().catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://' + dbUsername + ':' + dbPassword + '@' + dbIp + ':27017');
+  await mongoose.connect(dbProtocol + '://' + dbUsername + ':' + dbPassword + '@' + dbAddress);
 }
 
 const itemSchema = new mongoose.Schema({
